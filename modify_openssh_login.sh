@@ -33,14 +33,20 @@ fi
 
 ###### 创建用户 ######
 
+#修改ssh登录方式
+function modify_ssh(){
+    sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+}
+
 #创建用户价目录，并下载公钥信息
 function create_ssh(){{
     make /home/$1/.ssh
-    wget -o /home/$1/.ssh/authorized_keys http://scan.cmstop.com/download/$1/authorized_keys
+    wget -o /home/$1/.ssh/authorized_keys http://10.2.7.42/$1/authorized_keys
     chown -R $1:$1 /home/$1/.ssh
     chmod 644 /home/$1/.ssh
     chmod 600 /home/$1/.ssh/authorized_keys
-
+    modify_ssh
 }
 
 #创建用户函数，并保存用户信息到/tmp/目录下
@@ -90,7 +96,7 @@ function nologin_user(){
     for val in `cat /etc/passwd | grep bash | awk -F: '{print $1}'`
     do
         if [ "$val" != "root" ] && [ "$val" != "nginx" ];then
-            usermod -s /sbin/nologin "$val"
+            usermod -s /bin/nologin "$val"
         fi
     done
 }
