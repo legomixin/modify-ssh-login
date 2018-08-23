@@ -40,8 +40,8 @@ function modify_ssh(){
 }
 
 #创建用户价目录，并下载公钥信息
-function create_ssh(){{
-    make /home/$1/.ssh
+function create_ssh(){
+    mkdir /home/$1/.ssh
     wget -o /home/$1/.ssh/authorized_keys http://10.2.7.42/$1/authorized_keys
     chown -R $1:$1 /home/$1/.ssh
     chmod 644 /home/$1/.ssh
@@ -99,6 +99,7 @@ function nologin_user(){
             usermod -s /bin/nologin "$val"
         fi
     done
+    user
 }
 
 ###### 创建用户 #######
