@@ -93,10 +93,7 @@ function nologin_user(){
             usermod -s /sbin/nologin "$val"
         fi
     done
-
 }
-
-
 
 ###### 创建用户 #######
 
@@ -114,21 +111,4 @@ else
     exit
 fi
 ###### 脚本菜单 ######
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
